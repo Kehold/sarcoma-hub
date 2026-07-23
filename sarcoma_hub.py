@@ -1292,7 +1292,9 @@ def tab_patient_stories(stories):
             for fi in s.get("files", []):
                 files_html += f'<span class="ltag">📎 {fi["original"]}</span>'
             loc_str = f' · {s["location"]}' if s.get("location") else ""
-            st.markdown(f"""
+            s_col, d_col = st.columns([11, 1])
+            with s_col:
+                st.markdown(f"""
             <div class="scard">
                 <div class="scard-author">👤 {s.get('name','Anonymous')}</div>
                 <div class="scard-meta">
@@ -1303,6 +1305,13 @@ def tab_patient_stories(stories):
                 {('<div style="margin-top:0.5rem;">' + files_html + '</div>') if files_html else ''}
             </div>
             """, unsafe_allow_html=True)
+            with d_col:
+                if st.button("🗑", key=f"del_story_{s['id']}",
+                             help="Delete this story",
+                             use_container_width=True):
+                    stories = [x for x in stories if x["id"] != s["id"]]
+                    save_json("stories.json", stories)
+                    st.rerun()
 
             # Show downloadable attachments
             for fi in s.get("files", []):
@@ -1313,7 +1322,6 @@ def tab_patient_stories(stories):
                     with open(fpath, "rb") as f:
                         st.download_button(f"⬇️ {fi['original']}", f.read(),
                                            file_name=fi["original"], key=f"dl_s_{fi['filename']}")
-
     return stories
 
 
