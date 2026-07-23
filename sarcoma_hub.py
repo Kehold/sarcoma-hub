@@ -516,7 +516,43 @@ def inject_css():
 # ═══════════════════════════════════════════════════════════════════════════════
 # DATA LAYER
 # ═══════════════════════════════════════════════════════════════════════════════
+# ── Supabase persistent storage helpers ───────────────────────────────────────
+def _sb_url():
+    return (os.environ.get("SUPABASE_URL") or
+            st.secrets.get("SUPABASE_URL", ""))
+
+def _sb_key():
+    return (os.environ.get("SUPABASE_KEY") or
+            st.secrets.get("SUPABASE_KEY", ""))
+
+def _sb_headers(prefer="return=minimal"):
+    key = _sb_key()
+    return {
+        "apikey":        key,
+        "Authorization": f"Bearer {key}",
+        "Content-Type":  "application/json",
+        "Prefer":        prefer,
+    }
+
 def load_json(fname, default):
+    """Load from Supabase if configured, else local file."""
+    key = fname.replace(".json", "")
+    url = _sb_url()
+    if url:
+        try:
+            import urllib.request as _ur
+            req = _ur.Request(
+                f"{url}/rest/v1/json_store?key=eq.{key}&select=data",
+                headers=_sb_headers(prefer=""),
+                method="GET"
+            )
+            with _ur.urlopen(req, timeout=6) as resp:
+                rows = json.loads(resp.read())
+                if rows:
+                    return rows[0]["data"]
+        except Exception:
+            pass
+    # Fallback to local file
     p = DATA_DIR / fname
     if p.exists():
         try:
@@ -527,8 +563,31 @@ def load_json(fname, default):
     return default
 
 def save_json(fname, data):
-    with open(DATA_DIR / fname, "w") as f:
-        json.dump(data, f, indent=2, default=str)
+    """Save to Supabase (upsert) and local file backup."""
+    key = fname.replace(".json", "")
+    url = _sb_url()
+    if url:
+        try:
+            import urllib.request as _ur
+            payload = json.dumps({
+                "key": key, "data": data
+            }).encode()
+            req = _ur.Request(
+                f"{url}/rest/v1/json_store",
+                data=payload,
+                headers=_sb_headers(prefer="resolution=merge-duplicates"),
+                method="POST"
+            )
+            with _ur.urlopen(req, timeout=6) as resp:
+                resp.read()
+        except Exception:
+            pass
+    # Always write local backup
+    try:
+        with open(DATA_DIR / fname, "w") as f:
+            json.dump(data, f, indent=2, default=str)
+    except Exception:
+        pass
 
 
 # ── Default Curated Links ──────────────────────────────────────────────────────
