@@ -8385,6 +8385,10 @@ def main():
     }
     PAGE_REVERSE = {v: k for k, v in PAGE_LABELS.items()}
     current_label = PAGE_REVERSE.get(st.session_state["page"], "🏠 Home")
+    # Sync selectbox display to current page — safe here (before widget renders)
+    # on_change fires first on user interaction so page is already updated
+    st.session_state["top_nav_sel"] = current_label
+
 
     # on_change callback — fires before rerun, no post-render conflict
     def _on_nav_change():
