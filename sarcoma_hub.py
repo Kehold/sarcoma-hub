@@ -27,6 +27,24 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
+# ── SEO & Google Verification meta tags ───────────────────────────────────────
+st.markdown("""
+<head>
+<meta name="google-site-verification" content="GXTbi2sev9NE2_GTCkK9oCGhIsOnu9JLbGM0eDMCCgU" />
+<meta name="description" content="Living with Sarcoma — free patient resources, clinical trial screener, drug information, community stories, symptom tracker, and support for all 70+ sarcoma subtypes worldwide. Non-profit, open to all." />
+<meta name="keywords" content="sarcoma, sarcoma resources, sarcoma support, sarcoma patient community, living with sarcoma, sarcoma treatment, sarcoma clinical trials, liposarcoma, osteosarcoma, GIST, leiomyosarcoma, synovial sarcoma, Ewing sarcoma, sarcoma survivors" />
+<meta name="author" content="Keith R. Holdaway FGS" />
+<meta name="robots" content="index, follow" />
+<meta property="og:title" content="Living with Sarcoma | Patient & Survivor Community" />
+<meta property="og:description" content="Free resources, clinical trial screener, drug information, community stories and support for sarcoma patients and families worldwide." />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://emily-muggeridge-sarcoma.streamlit.app" />
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:title" content="Living with Sarcoma" />
+<meta name="twitter:description" content="Free patient resources and community for all sarcoma types. Non-profit, open to all." />
+</head>
+""", unsafe_allow_html=True)
+
 # ── Directory Setup ────────────────────────────────────────────────────────────
 DATA_DIR   = Path("data")
 UPLOAD_DIR = Path("uploads")
