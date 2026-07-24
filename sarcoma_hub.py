@@ -1067,14 +1067,14 @@ def tab_home(links, stories, resources, forum):
 
     featured_count = sum(1 for l in links if l.get("featured"))
     stat_items = [
-        (str(len(links)),    "Curated Resources",  "links"),
-        (str(len(stories)),  "Patient Stories",    "stories"),
-        (str(len(resources)),"Documents Shared",   "resources"),
-        (str(len(forum)),    "Forum Posts",        "forum"),
-        ("70+",              "Sarcoma Subtypes",   "navigator"),
+        (str(len(links)),     "Curated Resources",  "links",      "🔗 Links Directory"),
+        (str(len(stories)),   "Patient Stories",    "stories",    "💬 Patient Stories"),
+        (str(len(resources)), "Documents Shared",   "resources",  "📁 Resource Library"),
+        (str(len(forum)),     "Forum Posts",        "forum",      "💭 Community Forum"),
+        ("70+",               "Sarcoma Subtypes",   "navigator",  "🔬 Sarcoma Navigator"),
     ]
     sb1, sb2, sb3, sb4, sb5 = st.columns(5)
-    for col, (num, lbl, page_key) in zip(
+    for col, (num, lbl, page_key, nav_label) in zip(
             [sb1, sb2, sb3, sb4, sb5], stat_items):
         with col:
             st.markdown(f"""
@@ -1085,8 +1085,11 @@ def tab_home(links, stories, resources, forum):
             if st.button(f"→ {lbl}", key=f"stat_btn_{page_key}",
                          use_container_width=True,
                          help=f"Go to {lbl}"):
+                # Update BOTH page and top_nav_sel to prevent selectbox conflict
                 st.session_state["page"] = page_key
+                st.session_state["top_nav_sel"] = nav_label
                 st.rerun()
+
 
 
     col1, col2 = st.columns([3, 2], gap="large")
