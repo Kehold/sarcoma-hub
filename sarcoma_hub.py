@@ -1063,16 +1063,17 @@ def tab_home(links, stories, resources, forum):
 
         st.markdown('<div class="sh">⭐ Featured Resources</div>', unsafe_allow_html=True)
         featured = [l for l in links if l.get("featured")][:6]
-        # Batch all cards into ONE markdown call — avoids Streamlit dropping unsafe_allow_html in loops
-        featured_html = "\n".join(
-            f'<div class="lcard">'
-            f'<span class="featured-badge">★ Featured</span>'
-            f'<h4><a href="{lnk["url"]}" target="_blank" style="color:{NAVY};text-decoration:none;">{lnk["name"]}</a></h4>'
-            f'<p>{lnk["description"][:90]}…</p>'
-            f'</div>'
-            for lnk in featured
-        )
-        st.markdown(featured_html, unsafe_allow_html=True)
+        # Use st.html() + st.link_button() — works on iOS Safari
+        for lnk in featured:
+            st.html(
+                f'<div class="lcard">'
+                f'<span class="featured-badge">★ Featured</span>'
+                f'<h4 style="color:{NAVY};margin:0 0 0.2rem 0;">{lnk["name"]}</h4>'
+                f'<p style="color:#6B7A99;font-size:0.84rem;margin:0">{lnk["description"][:90]}…</p>'
+                f'</div>'
+            )
+            st.link_button("🔗 Open", url=lnk["url"], use_container_width=True)
+            st.markdown("")
 
     with col2:
         st.markdown('<div class="sh">📰 Quick Navigation</div>', unsafe_allow_html=True)
@@ -1144,8 +1145,22 @@ def tab_links(links):
 
     st.markdown(f"**{len(filtered)} resources found**")
 
-    # Render — batch all cards into ONE st.markdown() call per group to avoid
-    # Streamlit dropping unsafe_allow_html on repeated calls within a loop.
+    # Render — one st.html() per card + st.link_button() for iOS compatibility
+    def _render_link(lnk):
+        featured_html = '<span class="featured-badge">★ Featured</span>' if lnk.get("featured") else ""
+        tags_html = "".join(f'<span class="ltag">{t}</span>' for t in lnk.get("sarcoma_types", []))
+        st.html(
+            f'<div class="lcard">'
+            f'{featured_html}'
+            f'<h4 style="color:{NAVY};margin:0 0 0.25rem 0;">🔗 {lnk["name"]}</h4>'
+            f'<p style="color:#6B7A99;font-size:0.84rem;margin:0 0 0.35rem 0;">{lnk["description"]}</p>'
+            f'<div style="margin-top:0.3rem;">{tags_html}</div>'
+            f'</div>'
+        )
+        st.link_button("🔗 Open resource", url=lnk["url"],
+                       use_container_width=True)
+        st.markdown("")
+
     if cat_f == "All Categories":
         cats = sorted(set(l["category"] for l in filtered))
         for cat in cats:
@@ -1153,10 +1168,11 @@ def tab_links(links):
             if not cat_links:
                 continue
             st.markdown(f'<div class="sh">{cat} &nbsp;({len(cat_links)})</div>', unsafe_allow_html=True)
-            st.markdown(_build_cards_html(cat_links), unsafe_allow_html=True)
+            for lnk in cat_links:
+                _render_link(lnk)
     else:
-        if filtered:
-            st.markdown(_build_cards_html(filtered), unsafe_allow_html=True)
+        for lnk in filtered:
+            _render_link(lnk)
 
     if not filtered:
         st.info("No resources match your search. Try a different term or clear the filters.")
@@ -1193,23 +1209,6 @@ def tab_links(links):
     return links
 
 
-def _build_link_card_html(link):
-    """Return HTML string for one link card (no st.markdown call)."""
-    featured_html = '<span class="featured-badge">★ Featured</span>' if link.get("featured") else ""
-    tags_html = "".join(f'<span class="ltag">{t}</span>' for t in link.get("sarcoma_types", []))
-    return (
-        f'<div class="lcard">'
-        f'{featured_html}'
-        f'<h4><a href="{link["url"]}" target="_blank" style="color:{NAVY};text-decoration:none;">🔗 {link["name"]}</a></h4>'
-        f'<p>{link["description"]}</p>'
-        f'<div style="margin-top:0.4rem;">{tags_html}</div>'
-        f'</div>'
-    )
-
-
-def _build_cards_html(link_list):
-    """Concatenate card HTML for a list of links into a single block."""
-    return "\n".join(_build_link_card_html(lnk) for lnk in link_list)
 
 
 # ═══════════════════════════════════════════════════════════════════════════════
