@@ -506,6 +506,125 @@ def inject_css():
     margin: 0.2rem 0 0 !important;
 }}
 
+
+/* ── Mobile responsive ── */
+@media screen and (max-width: 768px) {{
+
+    /* Layout */
+    .block-container {{ padding: 0.6rem 0.8rem 2rem 0.8rem !important; max-width:100% !important; }}
+
+    /* All hero banners */
+    .hero, .drug-hero, .aid-hero, .appt-hero,
+    .tl-hero, .sc-hero, .journal-hero, .memorial-card {{
+        padding: 1.6rem 1.2rem !important;
+        border-radius: 12px !important;
+    }}
+    .hero h1 {{ font-size: 1.9rem !important; line-height:1.15 !important; }}
+    .drug-hero h1, .aid-hero h1, .appt-hero h1,
+    .tl-hero h1, .sc-hero h1, .journal-hero h1 {{
+        font-size: 1.7rem !important;
+    }}
+    .hero-sub, .drug-hero p, .aid-hero p,
+    .appt-hero p, .journal-hero p {{ font-size: 0.88rem !important; }}
+
+    /* Memorial */
+    .mem-name {{ font-size: 1.45rem !important; }}
+    .mem-quote {{ font-size: 0.85rem !important; }}
+    .mem-dedication {{ font-size: 0.76rem !important; }}
+
+    /* Stat grid — 2 columns on mobile */
+    .stat-grid {{
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 0.6rem !important;
+    }}
+    .stat-num {{ font-size: 1.8rem !important; }}
+    .stat-lbl {{ font-size: 0.72rem !important; }}
+
+    /* Cards */
+    .lcard, .scard, .aid-card, .dcard,
+    .ev-card, .fpost, .decode-card, .log-card,
+    .link-card, .q-card, .tcard {{
+        padding: 0.8rem 0.9rem !important;
+    }}
+    .scard-author, .dcard-name, .aid-name,
+    .log-type, .fpost-title {{ font-size: 0.95rem !important; }}
+
+    /* Mission block */
+    .mission-block {{ padding: 1.1rem !important; }}
+    .mission-block h3 {{ font-size: 1.2rem !important; }}
+
+    /* Section headers */
+    .sh {{ font-size: 1rem !important; }}
+
+    /* Tabs — smaller text */
+    .stTabs [data-baseweb="tab"] {{
+        font-size: 0.75rem !important;
+        padding: 0.4rem 0.55rem !important;
+    }}
+
+    /* Buttons — Apple min tap target 44px */
+    .stButton > button {{
+        min-height: 44px !important;
+        font-size: 0.88rem !important;
+    }}
+    .stLinkButton > a {{
+        min-height: 44px !important;
+        display:flex !important;
+        align-items:center !important;
+        justify-content:center !important;
+    }}
+
+    /* Prevent iOS auto-zoom on inputs (must be ≥16px) */
+    input, textarea, select,
+    [data-baseweb="input"] input,
+    [data-baseweb="textarea"] textarea {{
+        font-size: 16px !important;
+    }}
+
+    /* Symptom tracker trend boxes */
+    .trend-row {{ gap: 0.3rem !important; flex-wrap:wrap !important; }}
+    .trend-box {{ min-width: 70px !important; padding: 0.35rem !important; flex: 1 1 70px !important; }}
+    .trend-val {{ font-size: 1.1rem !important; }}
+    .trend-label {{ font-size: 0.62rem !important; }}
+
+    /* Streak box */
+    .streak-box {{ padding: 0.7rem !important; }}
+    .streak-num {{ font-size: 1.8rem !important; }}
+
+    /* Screener step labels */
+    .step-label {{ font-size: 0.58rem !important; letter-spacing:0 !important; }}
+    .step-bar {{ gap: 0.2rem !important; }}
+
+    /* Navigator 3-col → 1-col handled by Streamlit */
+    .tcard-prev, .tcard-age {{ font-size: 0.7rem !important; }}
+    .tcard h3 {{ font-size: 0.9rem !important; }}
+
+    /* Financial aid tracker stats */
+    .stat-mini-num {{ font-size: 1.2rem !important; }}
+    .stat-mini-lbl {{ font-size: 0.62rem !important; }}
+
+    /* Drug centre */
+    .dcard-name {{ font-size: 1rem !important; }}
+    .dcard-summary, .dse-item {{ font-size: 0.82rem !important; }}
+
+    /* Forum */
+    .fpost {{ padding: 0.85rem 0.9rem !important; }}
+    .freply {{ margin-left: 0.8rem !important; }}
+
+    /* Journal progress bar */
+    .progress-bar-outer {{ height: 6px !important; }}
+
+    /* Sidebar brand — smaller on mobile */
+    .sidebar-brand h2 {{ font-size: 1rem !important; }}
+    .nav-group-label {{ font-size: 0.62rem !important; }}
+}}
+
+@media screen and (max-width: 430px) {{
+    .hero h1 {{ font-size: 1.55rem !important; }}
+    .mem-name {{ font-size: 1.2rem !important; }}
+    .stat-num {{ font-size: 1.6rem !important; }}
+    .block-container {{ padding: 0.4rem 0.6rem 2rem 0.6rem !important; }}
+}}
 /* ── Hide Streamlit chrome ── */
 #MainMenu, footer, header {{ visibility: hidden; }}
 .viewerBadge_container__1QSob {{ display: none; }}
