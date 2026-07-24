@@ -1021,17 +1021,73 @@ def tab_home(links, stories, resources, forum):
         )
     st.markdown("")
 
-    # Stats
+
+    # Stats — clickable buttons that navigate to the relevant page
+    st.markdown("""
+<style>
+.stat-btn-row { display: flex; gap: 0.9rem; margin-bottom: 2rem; flex-wrap: wrap; }
+[data-testid="stButton"].stat-btn > button {
+    background: white !important;
+    border: 1px solid #DDE5EF !important;
+    border-top: 3px solid #1B9E8A !important;
+    border-radius: 12px !important;
+    padding: 1.1rem 0.5rem !important;
+    box-shadow: 0 2px 12px rgba(21,39,67,0.07) !important;
+    color: #152743 !important;
+    font-family: "DM Sans", sans-serif !important;
+    transition: all 0.18s !important;
+    width: 100% !important;
+    height: auto !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    cursor: pointer !important;
+}
+[data-testid="stButton"].stat-btn > button:hover {
+    border-top-color: #E87B35 !important;
+    box-shadow: 0 5px 18px rgba(21,39,67,0.13) !important;
+    transform: translateY(-2px) !important;
+}
+.stat-btn-num {
+    font-family: "DM Serif Display", serif !important;
+    font-size: 2.2rem !important;
+    color: #152743 !important;
+    line-height: 1 !important;
+    display: block !important;
+}
+.stat-btn-lbl {
+    font-size: 0.75rem !important;
+    color: #6B7A99 !important;
+    font-weight: 500 !important;
+    margin-top: 0.3rem !important;
+    display: block !important;
+}
+</style>
+""", unsafe_allow_html=True)
+
     featured_count = sum(1 for l in links if l.get("featured"))
-    st.markdown(f"""
-    <div class="stat-grid">
-        <div class="stat-box"><div class="stat-num">{len(links)}</div><div class="stat-lbl">Curated Resources</div></div>
-        <div class="stat-box"><div class="stat-num">{len(stories)}</div><div class="stat-lbl">Patient Stories</div></div>
-        <div class="stat-box"><div class="stat-num">{len(resources)}</div><div class="stat-lbl">Documents Shared</div></div>
-        <div class="stat-box"><div class="stat-num">{len(forum)}</div><div class="stat-lbl">Forum Posts</div></div>
-        <div class="stat-box"><div class="stat-num">70+</div><div class="stat-lbl">Sarcoma Subtypes</div></div>
-    </div>
-    """, unsafe_allow_html=True)
+    stat_items = [
+        (str(len(links)),    "Curated Resources",  "links"),
+        (str(len(stories)),  "Patient Stories",    "stories"),
+        (str(len(resources)),"Documents Shared",   "resources"),
+        (str(len(forum)),    "Forum Posts",        "forum"),
+        ("70+",              "Sarcoma Subtypes",   "navigator"),
+    ]
+    sb1, sb2, sb3, sb4, sb5 = st.columns(5)
+    for col, (num, lbl, page_key) in zip(
+            [sb1, sb2, sb3, sb4, sb5], stat_items):
+        with col:
+            st.markdown(f"""
+<div class="stat-box" style="cursor:pointer;text-align:center">
+    <div class="stat-num">{num}</div>
+    <div class="stat-lbl">{lbl}</div>
+</div>""", unsafe_allow_html=True)
+            if st.button(f"→ {lbl}", key=f"stat_btn_{page_key}",
+                         use_container_width=True,
+                         help=f"Go to {lbl}"):
+                st.session_state["page"] = page_key
+                st.rerun()
+
 
     col1, col2 = st.columns([3, 2], gap="large")
 
