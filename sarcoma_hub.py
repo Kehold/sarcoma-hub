@@ -8308,6 +8308,71 @@ def main():
             unsafe_allow_html=True
         )
 
+    # ── Mobile top navigation (selectbox always visible on mobile) ──────────
+    PAGE_LABELS = {
+        "🏠 Home":               "home",
+        "📖 My Story":           "my_story",
+        "📊 Symptom Tracker":    "symptoms",
+        "📅 Treatment Timeline": "timeline",
+        "💌 Legacy Journal":     "journal",
+        "🔬 Pathology Decoder":  "pathology",
+        "💊 Drug Centre":        "drugs",
+        "🧪 Trial Screener":     "trials",
+        "📋 Appointment Prep":   "appointments",
+        "🔗 Links Directory":    "links",
+        "💰 Financial Aid":      "financial",
+        "📁 Resource Library":   "resources",
+        "💬 Patient Stories":    "stories",
+        "💭 Community Forum":    "forum",
+        "🔬 Sarcoma Navigator":  "navigator",
+    }
+    PAGE_REVERSE = {v: k for k, v in PAGE_LABELS.items()}
+    current_label = PAGE_REVERSE.get(st.session_state["page"], "🏠 Home")
+
+    st.markdown("""
+<style>
+/* Show top nav only on mobile */
+.top-nav-wrap { display: none; }
+@media screen and (max-width: 768px) {
+    .top-nav-wrap {
+        display: block;
+        background: #152743;
+        border-radius: 10px;
+        padding: 0.5rem 0.7rem 0.3rem;
+        margin-bottom: 0.9rem;
+    }
+    .top-nav-wrap label {
+        color: rgba(255,255,255,0.6) !important;
+        font-size: 0.72rem !important;
+        font-weight: 600 !important;
+        text-transform: uppercase !important;
+        letter-spacing: 0.06em !important;
+    }
+    .top-nav-wrap select, .top-nav-wrap [data-baseweb="select"] {
+        background: #1E3A5F !important;
+        color: white !important;
+        border: none !important;
+        border-radius: 6px !important;
+        font-size: 0.95rem !important;
+    }
+}
+</style>
+""", unsafe_allow_html=True)
+
+    with st.container():
+        st.markdown('<div class="top-nav-wrap">', unsafe_allow_html=True)
+        top_sel = st.selectbox(
+            "Navigate to",
+            list(PAGE_LABELS.keys()),
+            index=list(PAGE_LABELS.keys()).index(current_label),
+            key="top_nav_sel",
+            label_visibility="visible",
+        )
+        st.markdown('</div>', unsafe_allow_html=True)
+        if PAGE_LABELS[top_sel] != st.session_state["page"]:
+            st.session_state["page"] = PAGE_LABELS[top_sel]
+            st.rerun()
+
     # ── Page routing ───────────────────────────────────────────────────────
     page = st.session_state["page"]
 
