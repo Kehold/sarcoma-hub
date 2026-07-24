@@ -1087,7 +1087,7 @@ def tab_home(links, stories, resources, forum):
                          help=f"Go to {lbl}"):
                 # Update BOTH page and top_nav_sel to prevent selectbox conflict
                 st.session_state["page"] = page_key
-                st.session_state["top_nav_sel"] = nav_label
+                # (nav selectbox synced in main() before widget renders)
                 st.rerun()
 
 
@@ -8385,6 +8385,8 @@ def main():
     }
     PAGE_REVERSE = {v: k for k, v in PAGE_LABELS.items()}
     current_label = PAGE_REVERSE.get(st.session_state["page"], "🏠 Home")
+    # Pre-set selectbox value before widget renders — avoids post-render conflict
+    st.session_state["top_nav_sel"] = current_label
 
     st.markdown("""
 <style>
