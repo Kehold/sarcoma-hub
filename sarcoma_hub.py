@@ -864,6 +864,29 @@ NAVIGATOR = {
 # TAB 0 — HOME
 # ═══════════════════════════════════════════════════════════════════════════════
 def tab_home(links, stories, resources, forum):
+    # Mobile navigation hint
+    st.markdown("""
+<style>
+.mob-nav-hint {
+    display: none;
+    background: rgba(27,158,138,0.12);
+    border: 1px solid rgba(27,158,138,0.35);
+    border-radius: 8px;
+    padding: 0.55rem 0.9rem;
+    font-size: 0.82rem;
+    color: #1B9E8A;
+    margin-bottom: 0.9rem;
+    text-align: center;
+}
+@media screen and (max-width: 768px) {
+    .mob-nav-hint { display: block; }
+}
+</style>
+<div class="mob-nav-hint">
+    ☰ &nbsp; Tap the <strong>menu icon</strong> (top-left) to navigate between pages
+</div>
+""", unsafe_allow_html=True)
+
     # Hero
     st.markdown(f"""
     <div class="hero">
