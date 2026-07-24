@@ -8385,8 +8385,11 @@ def main():
     }
     PAGE_REVERSE = {v: k for k, v in PAGE_LABELS.items()}
     current_label = PAGE_REVERSE.get(st.session_state["page"], "🏠 Home")
-    # Pre-set selectbox value before widget renders — avoids post-render conflict
-    st.session_state["top_nav_sel"] = current_label
+
+    # on_change callback — fires before rerun, no post-render conflict
+    def _on_nav_change():
+        sel = st.session_state.get("top_nav_sel", "🏠 Home")
+        st.session_state["page"] = PAGE_LABELS.get(sel, "home")
 
     st.markdown("""
 <style>
@@ -8407,30 +8410,22 @@ def main():
         text-transform: uppercase !important;
         letter-spacing: 0.06em !important;
     }
-    .top-nav-wrap select, .top-nav-wrap [data-baseweb="select"] {
-        background: #1E3A5F !important;
-        color: white !important;
-        border: none !important;
-        border-radius: 6px !important;
-        font-size: 0.95rem !important;
-    }
 }
 </style>
 """, unsafe_allow_html=True)
 
     with st.container():
         st.markdown('<div class="top-nav-wrap">', unsafe_allow_html=True)
-        top_sel = st.selectbox(
+        st.selectbox(
             "Navigate to",
             list(PAGE_LABELS.keys()),
             index=list(PAGE_LABELS.keys()).index(current_label),
             key="top_nav_sel",
             label_visibility="visible",
+            on_change=_on_nav_change,
         )
         st.markdown('</div>', unsafe_allow_html=True)
-        if PAGE_LABELS[top_sel] != st.session_state["page"]:
-            st.session_state["page"] = PAGE_LABELS[top_sel]
-            st.rerun()
+
 
     # ── Page routing ───────────────────────────────────────────────────────
     page = st.session_state["page"]
