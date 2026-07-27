@@ -1140,17 +1140,15 @@ def tab_home(links, stories, resources, forum):
 
         st.markdown('<div class="sh">⭐ Featured Resources</div>', unsafe_allow_html=True)
         featured = [l for l in links if l.get("featured")][:6]
-        # Use st.html() + st.link_button() — works on iOS Safari
         for lnk in featured:
-            st.html(
-                f'<div class="lcard">'
-                f'<span class="featured-badge">★ Featured</span>'
-                f'<h4 style="color:{NAVY};margin:0 0 0.2rem 0;">{lnk["name"]}</h4>'
-                f'<p style="color:#6B7A99;font-size:0.84rem;margin:0">{lnk["description"][:90]}…</p>'
-                f'</div>'
+            # Pure st.markdown — renders as native tappable link on iOS
+            st.markdown(
+                f"**★ [{lnk['name']}]({lnk['url']})**  \n"
+                f"{lnk['description'][:100]}…  \n"
+                f"[🔗 Open resource →]({lnk['url']})"
             )
-            st.markdown(f"**[🔗 Open: {lnk['name']}]({lnk['url']})**")
-            st.markdown("")
+            st.markdown("---")
+
 
     with col2:
         st.markdown('<div class="sh">📰 Quick Navigation</div>', unsafe_allow_html=True)
