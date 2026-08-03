@@ -1,0 +1,92 @@
+[
+  {
+    "id": "dd9b9163",
+    "name": "Newly Diagnosed with Sarcoma",
+    "type": "Clinical Guide",
+    "author": "",
+    "sarcoma_types": [
+      "All Types"
+    ],
+    "description": "Everything you need to know in the first weeks after diagnosis \u2014 from understanding your pathology \nreport to choosing where to be treated.",
+    "filename": "dd9b9163_01_New_Patient_Guide.pdf",
+    "original": "01_New_Patient_Guide.pdf",
+    "size": 12372,
+    "uploaded": "2026-07-22 11:27:31.845900",
+    "date": "2026-07-22"
+  },
+  {
+    "id": "d89d63aa",
+    "name": "Sarcoma Subtype Reference",
+    "type": "Clinical Guide",
+    "author": "",
+    "sarcoma_types": [
+      "All Types"
+    ],
+    "description": "Key diagnostic features, molecular markers, treatment approaches, and resources for the most common \nbone and soft tissue sarcoma subtypes.",
+    "filename": "d89d63aa_02_Sarcoma_Subtype_Reference.pdf",
+    "original": "02_Sarcoma_Subtype_Reference.pdf",
+    "size": 8618,
+    "uploaded": "2026-07-22 11:28:41.071278",
+    "date": "2026-07-22"
+  },
+  {
+    "id": "df55a447",
+    "name": "Navigating Clinical Trials",
+    "type": "Clinical Guide",
+    "author": "",
+    "sarcoma_types": [
+      "All Types"
+    ],
+    "description": "Understanding clinical trial phases, how to search for trials, what to expect as a participant, and your rights as a patient.\n",
+    "filename": "df55a447_03_Clinical_Trials_Guide.pdf",
+    "original": "03_Clinical_Trials_Guide.pdf",
+    "size": 8799,
+    "uploaded": "2026-07-22 11:29:45.580253",
+    "date": "2026-07-22"
+  },
+  {
+    "id": "6de928b2",
+    "name": "The Sarcoma Caregiver's Guide",
+    "type": "Patient Leaflet",
+    "author": "",
+    "sarcoma_types": [
+      "All Types"
+    ],
+    "description": "Practical advice on navigating appointments, managing side effects, protecting your own wellbeing, and\naccessing support as a caregiver.\n",
+    "filename": "6de928b2_04_Caregiver_Guide.pdf",
+    "original": "04_Caregiver_Guide.pdf",
+    "size": 9511,
+    "uploaded": "2026-07-22 11:30:49.145354",
+    "date": "2026-07-22"
+  },
+  {
+    "id": "d4235467",
+    "name": "Nutrition & Wellness During Sarcoma Treatment",
+    "type": "Nutrition & Wellness",
+    "author": "",
+    "sarcoma_types": [
+      "All Types"
+    ],
+    "description": "Evidence-based guidance on nutrition, physical activity, and wellbeing throughout sarcoma diagnosis,\ntreatment, and survivorship.\n",
+    "filename": "d4235467_05_Nutrition_Wellness_Guide.pdf",
+    "original": "05_Nutrition_Wellness_Guide.pdf",
+    "size": 11895,
+    "uploaded": "2026-07-22 11:31:57.814608",
+    "date": "2026-07-22"
+  },
+  {
+    "id": "8d75c742",
+    "name": "Life After Sarcoma",
+    "type": "Patient Leaflet",
+    "author": "",
+    "sarcoma_types": [
+      "All Types"
+    ],
+    "description": "Understanding follow-up care, managing late effects, returning to work, emotional recovery, and living\nwell beyond sarcoma treatment.\n",
+    "filename": "8d75c742_06_Survivorship_Guide.pdf",
+    "original": "06_Survivorship_Guide.pdf",
+    "size": 11823,
+    "uploaded": "2026-07-22 11:33:15.201994",
+    "date": "2026-07-22"
+  }
+]
